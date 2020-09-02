@@ -1,0 +1,11 @@
+.env
+.golangci.yml
+monitoring/Dockerfile
+monitoring/prometheus.yml
+monitoring/grafana
+
+k8s/
+rabbitmq/
+.vscode/
+.scannerwork/
+.idea/

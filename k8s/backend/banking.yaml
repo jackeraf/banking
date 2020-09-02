@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking
+  namespace: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: bank
+  template:
+    metadata:
+      labels:
+        component: bank
+    spec:
+      containers:
+        - name: banking
+          image: jackeraf/banking
+          env:
+            - name: URL
+              # cluster ip
+              value: rabbitmq-rabbitmq-ha.messaging.svc.cluster.local
+            - name: PORT
+              value: "5672"
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq
+                  key: password
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "25m"
+            limits:
+              memory: "256Mi"
+              cpu: "50m"
+      restartPolicy: Always
+      # imagePullSecrets:
+      #   - name: regcred

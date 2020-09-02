@@ -1,0 +1,7 @@
+.env
+mnesia/
+config/
+schema/
+.erlang.cookie
+.golangci.yml
+.idea/
